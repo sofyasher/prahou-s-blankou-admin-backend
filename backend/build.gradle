@@ -1,0 +1,60 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'jacoco'
+}
+
+group = 'prahousblankou'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /* spring */
+    implementation 'org.springframework.boot:spring-boot-starter:2.6.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.2'
+    implementation 'org.springframework:spring-web:5.3.14'
+
+    /* db and jpa */
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.2'
+    implementation 'org.springframework:spring-orm:5.3.14'
+    implementation 'org.apache.tomcat:tomcat-dbcp:10.0.14'
+    implementation 'org.xerial:sqlite-jdbc:3.36.0.2'
+    implementation 'com.github.gwenn:sqlite-dialect:0.1.0'
+
+    /* test db*/
+    implementation 'com.h2database:h2:2.0.204'
+
+    /* Lombok */
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    /*JSON parsing*/
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    /*HTTP requests*/
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+
+    /*testing*/
+    testImplementation "org.mockito:mockito-core:4.2.0"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.2'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
